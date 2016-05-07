@@ -1,3 +1,5 @@
 # sinxcosx-Integrator
 Calculus122 Honors Project
-Yes.
+by Christopher Settles
+with guidance of Chris Cunningham
+Done in C++
