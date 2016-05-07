@@ -1,0 +1,20 @@
+﻿Build started 5/3/2016 7:49:37 PM.
+     1>Project "E:\School\Integrator Calc122_04_20_2016\Integrator Calc122\Integrator Calc122.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt crsmath.cpp MainSource.cpp TrigTerm.cpp
+         TrigTerm.cpp
+     1>TrigTerm.cpp(99): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
+         MainSource.cpp
+         crsmath.cpp
+         Generating Code...
+       Link:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\School\Integrator Calc122_04_20_2016\x64\Debug\Integrator Calc122.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\School\Integrator Calc122_04_20_2016\x64\Debug\Integrator Calc122.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\School\Integrator Calc122_04_20_2016\x64\Debug\Integrator Calc122.lib" /MACHINE:X64 x64\Debug\crsmath.obj
+         x64\Debug\MainSource.obj
+         x64\Debug\TrigTerm.obj
+         LINK : E:\School\Integrator Calc122_04_20_2016\x64\Debug\Integrator Calc122.exe not found or not built by the last incremental link; performing full link
+         Integrator Calc122.vcxproj -> E:\School\Integrator Calc122_04_20_2016\x64\Debug\Integrator Calc122.exe
+     1>Done Building Project "E:\School\Integrator Calc122_04_20_2016\Integrator Calc122\Integrator Calc122.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.77

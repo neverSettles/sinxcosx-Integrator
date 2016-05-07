@@ -1,0 +1,15 @@
+945 - 10:00 figure out what the hell to do
+Write it it right here
+10:00 - 10:30 Get the outcoef to work and the exponent of the u to work. 
+
+What the program needs to do:
+
+-Use a loop from j = 0 to j = newexponent + 1 (because sin^4 goes to 
+((1+cos^2(x))^2) and that creates 3 terms when foiled (1 more than the 
+new exponent) 
+-Use NcR to find the new outer coefficient for each new term
+-The new exponent of the term is 'R' * 2 (Because it is traditionally u^2)
+
+Need to ask maya how to make an array that will expand in C++ and will be able to change it
+
+Ask why The constructor for TrigArray wasn't working. 
