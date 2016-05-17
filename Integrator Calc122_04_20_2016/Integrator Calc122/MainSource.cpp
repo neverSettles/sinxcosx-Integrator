@@ -29,6 +29,8 @@ int main()
 	}
 	*/
 	int sinexp, cosexp;
+	cout << "0*0: " << 0.00000000000*-1 << endl;
+	cout << pow(2, 5) <<endl; 
 	cout << "Enter the sin exp and cos exp" << endl;
 	cout << "Sin^:";
 	cin >> sinexp;
@@ -46,8 +48,8 @@ void printIntegral(TrigTerm &printee, string text) {
 	printee.Integrate();
 	printee.combineLikeTerms();
 
-	list<TrigTerm>::iterator iter;
-	list<TrigTerm> trig_list = printee.getList();
+	vector<TrigTerm>::iterator iter;
+	vector<TrigTerm> trig_list = printee.getList();
 	for (iter = trig_list.begin(); iter != trig_list.end(); iter++) {
 		cout << iter->toString() <<" + \n" ;
 	}

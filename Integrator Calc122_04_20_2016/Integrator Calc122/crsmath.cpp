@@ -6,9 +6,9 @@
 #include "crsmath.h"
 using namespace std;
 
-int fact(int number)
+long long fact(int number)
 {
-	int rv = 1;
+	long long rv = 1;
 
 	if (number == 0)
 		return 1;
@@ -20,10 +20,10 @@ int fact(int number)
 	return rv;
 }
 
-int nCr(int exp, int place)
+long long nCr(int exp, int place)
 {
 	if (place > exp)
 		return 0;
-	int rv = fact(exp) / (fact(place)*fact(exp - place));
+	long long rv = fact(exp) / (fact(place)*fact(exp - place));
 	return rv;
 }

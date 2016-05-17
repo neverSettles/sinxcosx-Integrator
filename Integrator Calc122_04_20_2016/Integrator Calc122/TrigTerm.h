@@ -5,12 +5,13 @@
 #include <string>
 #include <list>
 #include <iterator>
+#include <vector>
 using namespace std;
 
 class TrigTerm {
 private:
 	double outcoef;
-	int incoef;
+	double incoef;
 	int sinexp;
 	int cosexp;
 	int xexp;
@@ -30,7 +31,7 @@ public:
 	//Useful functions
 	string toString();
 
-	list<TrigTerm>& getList();
+	vector<TrigTerm>& getList();
 	void TrigTerm::combineLikeTerms();
 
 };

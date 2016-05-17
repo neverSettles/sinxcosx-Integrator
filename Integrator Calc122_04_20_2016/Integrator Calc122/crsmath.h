@@ -6,5 +6,5 @@
 using namespace std;
 
 //Other usefull functions
-int fact(int i);
-int nCr(int exp, int place);
+long long fact(int i);
+long long nCr(int exp, int place);

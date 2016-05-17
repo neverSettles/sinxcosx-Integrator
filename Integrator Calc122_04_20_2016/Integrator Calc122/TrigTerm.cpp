@@ -7,11 +7,15 @@
 #include <list>
 #include <iterator>
 #include <cmath>
+#include <vector>
 #include "TrigTerm.h"
 #include "crsmath.h"
 using namespace std;
 
-static list<TrigTerm> trig_list; //did not work when placed in the .h file
+static vector<TrigTerm> like_terms;
+
+static vector<TrigTerm> trig_list; //did not work when placed in the .h file // Changed to vector to allow to view the element at,
+//however the array is still 
 
 
 TrigTerm::TrigTerm(double _outcoef, double _incoef, int _sinexp, int _cosexp, int _xexp) {
@@ -25,37 +29,39 @@ TrigTerm::TrigTerm(double _outcoef, double _incoef, int _sinexp, int _cosexp, in
 void TrigTerm::initialize()
 {
 	trig_list.clear();
+	like_terms.clear();
 }
 
-string TrigTerm::toString() 
+string TrigTerm::toString()
 {
 	string rv = "";
 	ostringstream os;
 	os << fixed << setprecision(3) << showpoint;
+	
 	if (outcoef == 0) {
 		os << 0;
 		return os.str();
-	}
-		
+	} 
+
 	os << outcoef << "*";
 	if (xexp > 0)
 		os << "x^" << xexp;
 	if (sinexp > 0)
 		os << "sin^" << sinexp << "(" << incoef << "x) ";
 	if (cosexp > 0)
-		os << "cos^" << cosexp << "(" << incoef <<  "x)";
+		os << "cos^" << cosexp << "(" << incoef << "x)";
 	rv = os.str();
 	return rv;
-/*	char output[40];
-	sprintf_s(output, "%.3f*sin^%i(%.3fx) * cos^%i(%.3fx)", outcoef,sinexp,incoef, cosexp ,  incoef);
+	/*	char output[40];
+		sprintf_s(output, "%.3f*sin^%i(%.3fx) * cos^%i(%.3fx)", outcoef,sinexp,incoef, cosexp ,  incoef);
 
-	string rv = output;
-	string rv = to_string(outcoef) + "*sin^" + to_string(sinexp) +
-		"(" + to_string(incoef) + "x) * cos^" + to_string(cosexp) +
-		"(" + to_string(incoef) + "x)";*/
+		string rv = output;
+		string rv = to_string(outcoef) + "*sin^" + to_string(sinexp) +
+			"(" + to_string(incoef) + "x) * cos^" + to_string(cosexp) +
+			"(" + to_string(incoef) + "x)";*/
 }
 
-list<TrigTerm>& TrigTerm::getList()
+vector<TrigTerm>& TrigTerm::getList()
 {
 	return trig_list;
 }
@@ -94,14 +100,16 @@ void TrigTerm::evenIntegrate()
 	for (int i = 0; i < numofnewterms; i++) {
 		int newoutcoef = 0;
 		for (int j = 0; j <= i; j++) {
+
 			
-			//
 			newoutcoef += pow((-1), j) * nCr(newsinexp, j) * nCr(newcosexp, i - j); // The terms
+			//Debugging code
+			//cout << "In i=" << i << " j = " << j << " newoutcoef : " << newoutcoef << " nCr: " << nCr(newsinexp, j) << " " << nCr(newcosexp, i - j) <<" outcoef: " <<outcoef << endl;;
 		}
-		TrigTerm Jimmy(newoutcoef * outcoef, 2 * incoef, 0 , i);
-		//newsinexp should be 0
+		TrigTerm Jimmy(newoutcoef * outcoef, 2 * incoef, 0, i); //newsinexp should be 0
+		
 
-
+		cout <<"Integrating: "<< Jimmy.toString() << endl;
 		Jimmy.Integrate();
 	}
 
@@ -134,12 +142,12 @@ void TrigTerm::oddIntegrate()
 
 		//for (int i = 0, j = 1; i < 2; i++, j *= -1)
 
-		for (int i = 0, j = 1; i < numberofnewterms ; i++, j *=-1)
+		for (int i = 0, j = 1; i < numberofnewterms; i++, j *= -1)
 		{
 			int newcosexp = originalcosexp + 2 * i + 1; //i*2 because turned sines into cosines 2 at a time. 
-			
+
 			trig_list.push_back(TrigTerm(
-				(-1) / incoef * j * outcoef / (newcosexp) *  nCr(numberofnewterms - 1, i) , //-1/ inside coeficcient because u = cos(nx) so du = -sin nx * n dx so du*-1/n = sin nx dx
+				(-1.0) / incoef * j * outcoef / (newcosexp)*  nCr(numberofnewterms - 1, i), //-1/ inside coeficcient because u = cos(nx) so du = -sin nx * n dx so du*-1/n = sin nx dx
 				incoef,
 				0 * sinexp,
 				newcosexp));
@@ -160,13 +168,15 @@ void TrigTerm::oddIntegrate()
 
 
 		//for (int i = 0, j = 1; i < 2; i++, j *= -1)
-		                            
+
 		for (int i = 0, j = 1; i < numberofnewterms; i++, j *= -1)
 		{
 			int newsinexp = originalsinexp + 2 * i + 1; //i*2 because turned sines into cosines 2 at a time. 
 
+			double newoutcoef = (1) / incoef * j * outcoef / (newsinexp)*  nCr(numberofnewterms - 1, i); //-1/ inside coeficcient because u = cos(nx) so du = -sin nx * n dx so du*-1/n = sin nx dx
+			
 			trig_list.push_back(TrigTerm(
-				(1) / incoef * j * outcoef / (newsinexp)*  nCr(numberofnewterms - 1, i), //-1/ inside coeficcient because u = cos(nx) so du = -sin nx * n dx so du*-1/n = sin nx dx
+				newoutcoef,
 				incoef,
 				newsinexp,
 				0 * cosexp));
@@ -180,30 +190,33 @@ void TrigTerm::oddIntegrate()
 
 void TrigTerm::combineLikeTerms()
 {
-/*	for (int i = 0; i < trig_list.size(); i++)
-	{
-		Trig_Term = trig_list(i)
-	}
-	list<TrigTerm>::iterator iter, iterinner;
 
-	for (iter = trig_list.begin(); iter != trig_list.end(); iter++) {
-		
-		list<TrigTerm>::iterator iternext = iter; 
-		iternext++;
+	for (int i = 0; i < trig_list.size(); i++) {
 
-		for (iterinner = iternext; iter != trig_list.end(); ){
-			
-			if (
-				iter->incoef == iterinner->incoef &&
-				iter->sinexp == iterinner->sinexp &&
-				iter->cosexp == iterinner->cosexp)
-			{
-				iter->incoef += iterinner->incoef;
-				//i= items.erase(i);
-				iterinner = trig_list.erase(iterinner);
+		if (trig_list.at(i).outcoef != 0) { // If the term is 0, we do not want to add the term to the LikeTerms array.
+
+			bool found = false; //flag
+
+			for (int j = 0; j < like_terms.size(); j++) {
+				if (
+					trig_list.at(i).incoef == like_terms.at(j).incoef &&
+					trig_list.at(i).sinexp == like_terms.at(j).sinexp &&
+					trig_list.at(i).cosexp == like_terms.at(j).cosexp &&
+					trig_list.at(i).xexp == like_terms.at(j).xexp
+					)
+				{
+					like_terms.at(j).outcoef += trig_list.at(i).outcoef;
+					found = true;
+					break;
+				}
 			}
-			else
-				iterinner++;
+			if (!found) {
+				like_terms.push_back(trig_list.at(i));
+			}
 		}
-	}*/
+	}
+
+	trig_list = like_terms;
+
+
 }
